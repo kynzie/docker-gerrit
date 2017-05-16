@@ -28,6 +28,16 @@ ENV PLUGIN_VERSION=stable-2.13
 ENV GERRITFORGE_URL=https://gerrit-ci.gerritforge.com
 ENV GERRITFORGE_ARTIFACT_DIR=lastSuccessfulBuild/artifact/buck-out/gen/plugins
 
+#reviewers
+RUN curl -fSsL \
+    ${GERRITFORGE_URL}/job/plugin-reviewers-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/reviewers/reviewers.jar \
+    -o ${GERRIT_HOME}/reviewers.jar
+
+#wip
+RUN curl -fSsL \
+    ${GERRITFORGE_URL}/job/plugin-wip-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/wip/wip.jar \
+    -o ${GERRIT_HOME}/wip.jar
+
 #delete-project
 RUN curl -fSsL \
     ${GERRITFORGE_URL}/job/plugin-delete-project-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/delete-project/delete-project.jar \
