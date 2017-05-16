@@ -1,0 +1,47 @@
+version: '3'
+volumes:
+  gerrit-site-volume:
+  gerrit-repositories-volume:
+  postgres-volume:
+services:
+  gerrit:
+    build: .
+    container_name: gerrit
+    restart: on-failure
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - gerrit-site-volume:/var/gerrit/review_site
+      - gerrit-repositories-volume:/var/git
+    ports:
+      - 8080:8080
+      - 29418:29418
+    environment:
+      GERRIT_INIT_ARGS: --install-plugin=download-commands --install-plugin=singleusergroup
+      WEBURL: http://fukushima.lab.lse.epita.fr:8080
+      USER_NAME: gerrit
+      USER_EMAIL: gerrit@lse.epita.fr
+      GITWEB_TYPE: gitiles
+      AUTH_TYPE: LDAP
+      LDAP_SERVER: ldaps://auth.pie.cri.epita.net
+      LDAP_ACCOUNTBASE: dc=epita,dc=net
+      LDAP_SSLVERIFY: "false"
+      SMTP_SERVER: smtp.lse.epita.fr
+      SMTP_SERVER_PORT: 587
+      SMTP_CONNECT_TIMEOUT: 10sec
+      SMTP_FROM: USER
+    links:
+      - postgres-gerrit
+    depends_on:
+      - postgres-gerrit
+  postgres-gerrit:
+    image: postgres:latest
+    container_name: postgres
+    restart: on-failure
+    volumes:
+      - postgres-volume:/var/lib/postgresql/data
+    ports:
+      - 5432
+    environment:
+      POSTGRES_USER: postgres-gerrit-sand
+      POSTGRES_PASSWORD: qw2fG2dfl0mxW
+      POSTGRES_DB: reviewdb
