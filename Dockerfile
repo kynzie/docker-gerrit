@@ -6,7 +6,7 @@ MAINTAINER zsx <thinkernel@gmail.com>
 ENV GERRIT_HOME /var/gerrit
 ENV GERRIT_SITE ${GERRIT_HOME}/review_site
 ENV GERRIT_WAR ${GERRIT_HOME}/gerrit.war
-ENV GERRIT_VERSION 2.13.8
+ENV GERRIT_VERSION 2.15.2
 ENV GERRIT_USER gerrit2
 ENV GERRIT_INIT_ARGS ""
 
@@ -24,7 +24,7 @@ RUN curl -fSsL https://gerrit-releases.storage.googleapis.com/gerrit-${GERRIT_VE
 #COPY gerrit-${GERRIT_VERSION}.war $GERRIT_WAR
 
 #Download Plugins
-ENV PLUGIN_VERSION=stable-2.13
+ENV PLUGIN_VERSION=stable-2.15
 ENV GERRITFORGE_URL=https://gerrit-ci.gerritforge.com
 ENV GERRITFORGE_ARTIFACT_DIR=lastSuccessfulBuild/artifact/buck-out/gen/plugins
 
@@ -32,6 +32,21 @@ ENV GERRITFORGE_ARTIFACT_DIR=lastSuccessfulBuild/artifact/buck-out/gen/plugins
 RUN curl -fSsL \
     ${GERRITFORGE_URL}/job/plugin-reviewers-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/reviewers/reviewers.jar \
     -o ${GERRIT_HOME}/reviewers.jar
+
+#singleusergroup
+RUN curl -fSsL \
+    ${GERRITFORGE_URL}/job/plugin-singleusergroup-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/singleusergroup/singleusergroup.jar \
+    -o ${GERRIT_HOME}/singleusergroup.jar
+
+#download-commands
+RUN curl -fSsL \
+    ${GERRITFORGE_URL}/job/plugin-download-commands-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/download-commands/download-commands.jar \
+    -o ${GERRIT_HOME}/download-commands.jar
+
+#commit-message-length-validator
+RUN curl -fSsL \
+    ${GERRITFORGE_URL}/job/plugin-commit-message-length-validator-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/commit-message-length-validator/commit-message-length-validator.jar \
+    -o ${GERRIT_HOME}/commit-message-length-validator.jar
 
 #wip
 RUN curl -fSsL \
