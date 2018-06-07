@@ -16,6 +16,7 @@ services:
       - 8080:8080
       - 29418:29418
     environment:
+      GERRIT_INIT_ARGS: --install-plugin=download-commands --install-plugin=singleusergroup --install-plugin=commit-message-length-validator
       WEBURL: http://fukushima.lab.lse.epita.fr:8080
       USER_NAME: gerrit
       USER_EMAIL: gerrit@lse.epita.fr

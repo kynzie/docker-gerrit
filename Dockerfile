@@ -26,47 +26,28 @@ RUN curl -fSsL https://gerrit-releases.storage.googleapis.com/gerrit-${GERRIT_VE
 #Download Plugins
 ENV PLUGIN_VERSION=stable-2.15
 ENV GERRITFORGE_URL=https://gerrit-ci.gerritforge.com
-ENV GERRITFORGE_ARTIFACT_DIR=lastSuccessfulBuild/artifact/buck-out/gen/plugins
+ENV GERRIT_PLUGIN_URL=view/Plugins-${PLUGIN_VERSION}/job
+ENV GERRITFORGE_ARTIFACT_DIR=lastSuccessfulBuild/artifact/bazel-genfiles/plugins
 
 #reviewers
 RUN curl -fSsL \
-    ${GERRITFORGE_URL}/job/plugin-reviewers-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/reviewers/reviewers.jar \
+    ${GERRITFORGE_URL}/${GERRIT_PLUGIN_URL}/plugin-reviewers-bazel-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/reviewers/reviewers.jar \
     -o ${GERRIT_HOME}/reviewers.jar
-
-#singleusergroup
-RUN curl -fSsL \
-    ${GERRITFORGE_URL}/job/plugin-singleusergroup-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/singleusergroup/singleusergroup.jar \
-    -o ${GERRIT_HOME}/singleusergroup.jar
-
-#download-commands
-RUN curl -fSsL \
-    ${GERRITFORGE_URL}/job/plugin-download-commands-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/download-commands/download-commands.jar \
-    -o ${GERRIT_HOME}/download-commands.jar
-
-#commit-message-length-validator
-RUN curl -fSsL \
-    ${GERRITFORGE_URL}/job/plugin-commit-message-length-validator-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/commit-message-length-validator/commit-message-length-validator.jar \
-    -o ${GERRIT_HOME}/commit-message-length-validator.jar
-
-#wip
-RUN curl -fSsL \
-    ${GERRITFORGE_URL}/job/plugin-wip-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/wip/wip.jar \
-    -o ${GERRIT_HOME}/wip.jar
 
 #delete-project
 RUN curl -fSsL \
-    ${GERRITFORGE_URL}/job/plugin-delete-project-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/delete-project/delete-project.jar \
+    ${GERRITFORGE_URL}/${GERRIT_PLUGIN_URL}/plugin-delete-project-bazel-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/delete-project/delete-project.jar \
     -o ${GERRIT_HOME}/delete-project.jar
 
 #events-log
 #This plugin is required by gerrit-trigger plugin of Jenkins.
 RUN curl -fSsL \
-    ${GERRITFORGE_URL}/job/plugin-events-log-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/events-log/events-log.jar \
+    ${GERRITFORGE_URL}/${GERRIT_PLUGIN_URL}/plugin-events-log-bazel-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/events-log/events-log.jar \
     -o ${GERRIT_HOME}/events-log.jar
 
 #gitiles
 RUN curl -fSsL \
-    ${GERRITFORGE_URL}/job/plugin-gitiles-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/gitiles/gitiles.jar \
+    ${GERRITFORGE_URL}/${GERRIT_PLUGIN_URL}/plugin-gitiles-bazel-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/gitiles/gitiles.jar \
     -o ${GERRIT_HOME}/gitiles.jar
 
 #oauth2 plugin
