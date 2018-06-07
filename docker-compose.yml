@@ -16,14 +16,13 @@ services:
       - 8080:8080
       - 29418:29418
     environment:
-      GERRIT_INIT_ARGS: --install-plugin=download-commands --install-plugin=singleusergroup
       WEBURL: http://fukushima.lab.lse.epita.fr:8080
       USER_NAME: gerrit
       USER_EMAIL: gerrit@lse.epita.fr
       GITWEB_TYPE: gitiles
       AUTH_TYPE: LDAP
       LDAP_SERVER: ldaps://auth.pie.cri.epita.net
-      LDAP_ACCOUNTBASE: dc=epita,dc=net
+      LDAP_ACCOUNTBASE: dc=epita,dc=net,cn=2019,ou=classGroup
       LDAP_SSLVERIFY: "false"
       SMTP_SERVER: smtp.lse.epita.fr
       SMTP_SERVER_PORT: 587
