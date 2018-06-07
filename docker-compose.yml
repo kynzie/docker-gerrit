@@ -23,7 +23,8 @@ services:
       GITWEB_TYPE: gitiles
       AUTH_TYPE: LDAP
       LDAP_SERVER: ldaps://auth.pie.cri.epita.net
-      LDAP_ACCOUNTBASE: dc=epita,dc=net,cn=2019_gistre,ou=classGroup
+      LDAP_ACCOUNTBASE: ou=users,dc=epita,dc=net
+      LDAP_ACCOUNTPATTERN: (&(|(memberOf=cn=2019_gistre,ou=classGroups,dc=epita,dc=net)(uid=alizee.penel))(uid=$${username}))
       LDAP_SSLVERIFY: "false"
       SMTP_SERVER: smtp.lse.epita.fr
       SMTP_SERVER_PORT: 587
