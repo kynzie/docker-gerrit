@@ -16,7 +16,7 @@ services:
       - 8080:8080
       - 29418:29418
     environment:
-      GERRIT_INIT_ARGS: --install-plugin=download-commands --install-plugin=singleusergroup
+      GERRIT_INIT_ARGS: --install-plugin=download-commands --install-plugin=singleusergroup --install-plugin=commit-message-length-validator
       WEBURL: http://localhost:8080
       USER_NAME: gerrit
       USER_EMAIL: gerrit@lse.epita.fr
@@ -27,6 +27,14 @@ services:
       DB_ENV_POSTGRES_USER: postgres
       DB_ENV_POSTGRES_PASSWORD: qw2fG2dfl0mxW
       DB_ENV_POSTGRES_DB: reviewdb
+      LDAP_SERVER: ldaps://auth.pie.cri.epita.net
+      LDAP_ACCOUNTBASE: ou=users,dc=epita,dc=net
+      LDAP_ACCOUNTPATTERN: (&(|(memberOf=cn=2019_gistre,ou=classGroups,dc=epita,dc=net)(uid=alizee.penel))(uid=$${username}))
+      LDAP_SSLVERIFY: "false"
+      SMTP_SERVER: smtp.lse.epita.fr
+      SMTP_SERVER_PORT: 587
+      SMTP_CONNECT_TIMEOUT: 10sec
+      SMTP_FROM: USER
     networks:
       sync:
         ipv4_address: 172.16.238.11
