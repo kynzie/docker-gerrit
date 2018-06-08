@@ -44,6 +44,11 @@ RUN curl -fSsL \
     ${GERRITFORGE_URL}/job/plugin-gitiles-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/gitiles/gitiles.jar \
     -o ${GERRIT_HOME}/gitiles.jar
 
+#admin-console
+RUN curl -fSsL \
+    ${GERRITFORGE_URL}/job/plugin-admin-console-${PLUGIN_VERSION}/${GERRITFORGE_ARTIFACT_DIR}/admin-console/admin-console.jar \
+    -o ${GERRIT_HOME}/admin-console.jar
+
 #oauth2 plugin
 ENV GERRIT_OAUTH_VERSION 2.14.6
 
